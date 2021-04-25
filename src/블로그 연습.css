@@ -3,19 +3,19 @@
   text-align: left;
   background-color: rgba(19, 16, 16, 0.603);
   color: white;
-  padding: 15px;
+  padding: 20px;
   box-sizing: border-box;
   width: 100%;
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 600;
   position: relative;
 }
 
 .list {
   text-align: left;
-  padding: 0 15px 0 15px;
-  margin: 10px 0 0 0;
+  padding: 10px 20px 0px 20px;
 
+  box-sizing: border-box;
 }
 
 .list h3 {
@@ -23,17 +23,41 @@
   margin: 15px 0 0 0;
 }
 .date {
-  margin: 10px 0 0 0;
+  margin: 0;
+  font-size: 15px;
 }
-
 
 .changeTheme {
   display: flex;
   position: absolute;
-  right : 0%;
+  right: 0%;
   bottom: 0%;
   border: 0;
   font-weight: 600;
   color: gray;
   background-color: rgba(49, 45, 45, 0.603);
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.dateViewSide {
+  display: flex;
+  position: relative;
+  margin-top: 10px;
+}
+.pageView {
+  display: flex;
+  position: absolute;
+  right: 0%;
+}
+hr {
+  margin-bottom: 0px;
+}
+
+.modal {
+  margin-top: 20px;
+  padding: 20px;
+  background: #eee;
 }
