@@ -22,50 +22,44 @@ function App(){
   function eyes(){
     pageViewChange(pageView + 1) 
   }
+
     return (
       <div className="App">
-        <div className="nav">
-          <div>Mr.Lee Blog</div>
-          <button className="changeTheme" onClick={ 제목바꾸기 }>secret room</button>
-        </div>
-
-        <div className="list">
-          <a onClick={ eyes } target="_blank" href="https://www.naver.com"> 
-            <div className="topicSide">
-              <h3> {topic[0]} <span>📺</span>
-              </h3>
-            </div>
-            <div className="dateViewSide">
-              <p className="date">21.04.22</p>
-              <div className="pageView">
-                👀{ pageView }
-              </div>
-            </div>
-          </a>
-          <hr/>
-        </div>
-
-        <div className="list">
-          <a target="_blank" href="https://www.naver.com"> 
-            <div className="topicSide">
-              <h3> {topic[0]} <span>📺</span>
-              </h3>
-            </div>
-            <div className="dateViewSide">
-              <p className="date">21.04.22</p>
-              <div className="pageView">
-                👀{ pageView }
-              </div>
-            </div>
-          </a>
-          <hr/>
-        </div>
-        <div className="modal">
-          <h2>제목</h2>
-          <p>날짜</p>
-          <p>상세내용</p>
-        </div>
+        <List eyes={eyes} topic={topic[0]} pageView={pageView} /> 
+        <List eyes={eyes} topic={topic[1]} pageView={pageView} /> 
+        <Modal title="Mr.Lee" date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
       </div>
     );
 }
+
+function List(props){
+  return (
+    <div className="list">
+      <a  onClick={ props.eyes } target="_blank" href="https://www.naver.com"> 
+        <div className="topicSide">
+          <h3> {  props.topic } <span>📺</span>
+          </h3>
+        </div>
+        <div className="dateViewSide">
+          <p className="date">21.04.22</p>
+          <div className="pageView">
+            👀{ props.pageView }
+          </div>
+        </div>
+      </a>
+      <hr/>
+    </div>
+  )
+}
+
+function Modal(props){
+  return (
+    <div className="modal">
+      <h2>제목 : {props.title}</h2>
+      <p>날짜 : {props.date}</p>
+      <p>상세내용 : {props.detail}</p>
+    </div>
+  )
+}
+
 export default App;
