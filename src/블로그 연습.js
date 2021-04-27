@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-
+import List from './components/List';
+import Modal from './components/Modal';
 import './블로그 연습.css';
 
 
 function App(){
+  //state 
   let [topic,topicChange] = useState(['daily news','Today issue']);
   let [pageView,pageViewChange] = useState(0)
+  //state
 
+  //function
   function 제목바꾸기(){
     let newArray = [...topic];    // depp copy   
     if(topic[0] === 'daily news'){
@@ -22,44 +26,22 @@ function App(){
   function eyes(){
     pageViewChange(pageView + 1) 
   }
+  //function
 
-    return (
-      <div className="App">
-        <List eyes={eyes} topic={topic[0]} pageView={pageView} /> 
-        <List eyes={eyes} topic={topic[1]} pageView={pageView} /> 
-        <Modal title="Mr.Lee" date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
-      </div>
-    );
-}
-
-function List(props){
+  //html
   return (
-    <div className="list">
-      <a  onClick={ props.eyes } target="_blank" href="https://www.naver.com"> 
-        <div className="topicSide">
-          <h3> {  props.topic } <span>📺</span>
-          </h3>
-        </div>
-        <div className="dateViewSide">
-          <p className="date">21.04.22</p>
-          <div className="pageView">
-            👀{ props.pageView }
-          </div>
-        </div>
-      </a>
-      <hr/>
+    <div className="App">
+      <div className="nav">
+        <div>Mr.Lee Blog</div>
+        <button onClick={ 제목바꾸기 } className="changeTheme">secret room</button>
+      </div>    
+      <List href={'https://news.naver.com/'} topic={topic[0]} icon={'📺'} pageView={pageView} eyes={eyes} /> 
+      <List href={'https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=001'} topic={topic[1]} icon={'🤩'} pageView={pageView} eyes={eyes} /> 
+      <Modal title="Mr.Lee" date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
     </div>
-  )
+  );
+  //html
 }
 
-function Modal(props){
-  return (
-    <div className="modal">
-      <h2>제목 : {props.title}</h2>
-      <p>날짜 : {props.date}</p>
-      <p>상세내용 : {props.detail}</p>
-    </div>
-  )
-}
 
 export default App;
