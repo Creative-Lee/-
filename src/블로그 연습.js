@@ -8,6 +8,7 @@ function App(){
   //state 
   let [topic,topicChange] = useState(['daily news','Today issue']);
   let [pageView,pageViewChange] = useState(0)
+  let [name,nameChange] = useState({'도현' : '도짱' , '쩡이' : '쩡짱'});
   //state
 
   //function
@@ -37,7 +38,7 @@ function App(){
       </div>    
       <List href={'https://news.naver.com/'} topic={topic[0]} icon={'📺'} pageView={pageView} eyes={eyes} /> 
       <List href={'https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=001'} topic={topic[1]} icon={'🤩'} pageView={pageView} eyes={eyes} /> 
-      <Modal title="Mr.Lee" date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
+      <Modal title="Mr.Lee" writer={ name.쩡이 } date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
     </div>
   );
   //html
