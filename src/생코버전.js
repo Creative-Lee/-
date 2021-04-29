@@ -9,12 +9,10 @@ function App(){
   let [topic,topicChange] = useState(['daily news','Today issue']);
   let [pageView,pageViewChange] = useState(0)
   let [name,nameChange] = useState({'도현' : '도짱' , '쩡이' : '쩡짱'});
-  let [modalState,modalStateChange] = useState(0)
-
   //state
 
   //function
-  function titleChange(){
+  function 제목바꾸기(){
     let newArray = [...topic];    // depp copy   
     if(topic[0] === 'daily news'){
       newArray = ['미스터리한 개발자','Mr.Lee의 등장!'] ;
@@ -26,29 +24,20 @@ function App(){
     }
   }
 
-  function listClick(){
-    pageViewChange(pageView + 1) ;
-    
-    if(modalState === 0){
-      modalStateChange(1);
-      
-    }
-    else if(modalState === 1){
-      modalStateChange(0);
-    }
+  function eyes(){
+    pageViewChange(pageView + 1) 
   }
-  
   //function
-  
+
   //html
   return (
     <div className="App">
       <div className="nav">
         <div>Mr.Lee Blog</div>
-        <button onClick={ titleChange } className="changeTheme">secret room</button>
+        <button onClick={ 제목바꾸기 } className="changeTheme">secret room</button>
       </div>    
-      <List topic={topic[0]} icon={'📺'} pageView={pageView} listClick={listClick} />
-      <List topic={topic[1]} icon={'🤩'} pageView={pageView} listClick={listClick} />
+      <List href={'https://news.naver.com/'} topic={topic[0]} icon={'📺'} pageView={pageView} eyes={eyes} /> 
+      <List href={'https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=001'} topic={topic[1]} icon={'🤩'} pageView={pageView} eyes={eyes} /> 
       <Modal title="Mr.Lee" writer={ name.쩡이 } date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
     </div>
   );
