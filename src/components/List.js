@@ -2,7 +2,7 @@ function List(props){
     return (
       <div className="list" onClick={ props.listClick }>
         <div className="topicSide">
-            <h3> { props.topic } <span>{ props.icon }</span>
+            <h3> { props.topic }
             </h3>
         </div>
         <div className="dateViewSide">

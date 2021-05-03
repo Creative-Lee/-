@@ -7,32 +7,32 @@ import './블로그 연습.css';
 function App(){
   //state 
   let [topic,topicChange] = useState(['daily news 📺','Today issue 🤩']);
-  let [pageView,pageViewChange] = useState(0)
+  let [pageView,pageViewChange] = useState([0,0]);
   let [name,nameChange] = useState({'도현' : '도짱' , '쩡이' : '쩡짱'});
   let [modalState,modalStateChange] = useState(false);
+  let [topicNumber,topicNumberChange] = useState(0);
   //state
 
   //function
-  function titleChange(){
-    let newArray = [...topic];    // deep copy   
-    if(topic[0] === 'daily news'){
-      newArray = ['미스터리한 개발자','Mr.Lee의 등장!'] ;
-      topicChange(newArray);
+  function changeTopic(){
+    let newTopic = [...topic];    // deep copy   
+    if(topic[0] === 'daily news 📺'){
+      newTopic = ['미스터리한 개발자 ✨','Mr.Lee의 등장! ✨'] ;
+      topicChange(newTopic);
     }
     else{
-      newArray = ['daily news','Today issue'] ;
-      topicChange(newArray);
+      newTopic = ['daily news 📺','Today issue 🤩'] ;
+      topicChange(newTopic);
     }
   }
 
-  function listClick(){
-    pageViewChange(pageView + 1) ;
-    if(modalState === false){
-      modalStateChange(true);
-    }
-    else{
-      modalStateChange(false);
-    }
+  
+  function listClick(arg){
+    let newPageview = [...pageView] // deep copy  
+    newPageview = [pageView[0]+1,pageView[1]+1];
+    pageViewChange(newPageview);
+
+    topicNumberChange(arg);
   }
   
   //function
@@ -42,37 +42,42 @@ function App(){
     <div className="App">
       <div className="nav">
         <div>Mr.Lee Blog</div>
-        <button onClick={ titleChange } className="changeTheme">secret room</button>
+        <button onClick={ changeTopic } className="changeTheme">secret room</button>
       </div>    
-      <List topic={topic[0]} icon={'📺'} pageView={pageView} listClick={listClick} />
-      <List topic={topic[1]} icon={'🤩'} pageView={pageView} listClick={listClick} />
+      {/* <List topic={topic[0]} pageView={pageView} listClick={listClick} /> */}
+      {/* <List topic={topic[1]} pageView={pageView} listClick={listClick} />  */}
 
       {
-        topic.map(function(topic){
-          return (
-            <div className="list" onClick={ listClick }>
-            <div className="topicSide">
-                <h3> { topic } <span>{'📺'}</span>
-                </h3>
-            </div>
-            <div className="dateViewSide">
-              <p className="date">21.04.22</p>
-              <div className="pageView">
-                👀{ pageView }
-              </div>
-            </div>
-            <hr/>
-          </div>
+        topic.map((a,i)=> {
+          return (    
+            <List topic={a} pageView={pageView[i]} listClick={ ()=>listClick(i) } />
+          //  <div className="list" onClick= { ()=>{listClick(i)} }>
+          //  <div className="topicSide">
+          //      <h3> { a }
+          //      </h3>
+          //  </div>
+          //  <div className="dateViewSide">
+          //    <p className="date">21.04.22</p>
+          //    <div className="pageView">
+          //      👀{ pageView[i] }
+          //    </div>
+          //  </div>
+          //  <hr/>
+          //</div>
           )
         })
       }
+    
 
       {
         modalState === true
-        ? <Modal title="Mr.Lee" writer={ name.쩡이 } date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
+        ? <Modal topic={topic} topicNumber={topicNumber}  writer={ name.쩡이 } date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
         : null
-      }      
+      }
+      <button onClick={ ()=>{modalStateChange(!modalState)} }>모달 on/off</button>
+      
     </div>
+    
   );
   //html
 }
