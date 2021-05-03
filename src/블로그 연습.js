@@ -6,7 +6,7 @@ import './블로그 연습.css';
 
 function App(){
   //state 
-  let [topic,topicChange] = useState(['daily news','Today issue']);
+  let [topic,topicChange] = useState(['daily news 📺','Today issue 🤩']);
   let [pageView,pageViewChange] = useState(0)
   let [name,nameChange] = useState({'도현' : '도짱' , '쩡이' : '쩡짱'});
   let [modalState,modalStateChange] = useState(false);
@@ -46,6 +46,27 @@ function App(){
       </div>    
       <List topic={topic[0]} icon={'📺'} pageView={pageView} listClick={listClick} />
       <List topic={topic[1]} icon={'🤩'} pageView={pageView} listClick={listClick} />
+
+      {
+        topic.map(function(topic){
+          return (
+            <div className="list" onClick={ listClick }>
+            <div className="topicSide">
+                <h3> { topic } <span>{'📺'}</span>
+                </h3>
+            </div>
+            <div className="dateViewSide">
+              <p className="date">21.04.22</p>
+              <div className="pageView">
+                👀{ pageView }
+              </div>
+            </div>
+            <hr/>
+          </div>
+          )
+        })
+      }
+
       {
         modalState === true
         ? <Modal title="Mr.Lee" writer={ name.쩡이 } date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
