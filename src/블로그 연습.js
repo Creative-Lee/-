@@ -8,7 +8,6 @@ function App(){
   //state 
   let [topic,topicChange] = useState(['daily news 📺','Today issue 🤩']);
   let [pageView,pageViewChange] = useState([0,0]);
-  let [name,nameChange] = useState({'도현' : '도짱' , '쩡이' : '쩡짱'});
   let [modalState,modalStateChange] = useState(false);
   let [topicNumber,topicNumberChange] = useState(0);
   //state
@@ -26,15 +25,22 @@ function App(){
     }
   }
 
-  
-  function listClick(arg){
-    let newPageview = [...pageView] // deep copy  
-    newPageview = [pageView[0]+1,pageView[1]+1];
+  function listClick(i){
+    let newPageview = [...pageView]; // deep copy  
+    newPageview[i] = newPageview[i]+1 ;
     pageViewChange(newPageview);
-
-    topicNumberChange(arg);
-  }
   
+    if(modalState===false){
+      modalStateChange(!modalState);
+      topicNumberChange(i);
+    }
+    else if(topicNumber===i){
+      modalStateChange(!modalState);
+    }
+    else{
+      topicNumberChange(i);
+    }
+  }
   //function
   
   //html
@@ -44,26 +50,10 @@ function App(){
         <div>Mr.Lee Blog</div>
         <button onClick={ changeTopic } className="changeTheme">secret room</button>
       </div>    
-      {/* <List topic={topic[0]} pageView={pageView} listClick={listClick} /> */}
-      {/* <List topic={topic[1]} pageView={pageView} listClick={listClick} />  */}
-
       {
         topic.map((a,i)=> {
           return (    
             <List topic={a} pageView={pageView[i]} listClick={ ()=>listClick(i) } />
-          //  <div className="list" onClick= { ()=>{listClick(i)} }>
-          //  <div className="topicSide">
-          //      <h3> { a }
-          //      </h3>
-          //  </div>
-          //  <div className="dateViewSide">
-          //    <p className="date">21.04.22</p>
-          //    <div className="pageView">
-          //      👀{ pageView[i] }
-          //    </div>
-          //  </div>
-          //  <hr/>
-          //</div>
           )
         })
       }
@@ -71,13 +61,10 @@ function App(){
 
       {
         modalState === true
-        ? <Modal topic={topic} topicNumber={topicNumber}  writer={ name.쩡이 } date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
+        ? <Modal topic={topic} topicNumber={topicNumber} date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
         : null
       }
-      <button onClick={ ()=>{modalStateChange(!modalState)} }>모달 on/off</button>
-      
     </div>
-    
   );
   //html
 }
