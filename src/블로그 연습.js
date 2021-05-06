@@ -6,10 +6,11 @@ import './블로그 연습.css';
 
 function App(){
   //state 
-  let [topic,topicChange] = useState(['daily news 📺','Today issue 🤩']);
-  let [pageView,pageViewChange] = useState([0,0]);
-  let [modalState,modalStateChange] = useState(false);
-  let [topicNumber,topicNumberChange] = useState(0);
+  let [topic,setTopic] = useState(['daily news 📺','Today issue 🤩']);
+  let [pageView,setPageView] = useState([0,0]);
+  let [modalState,setModalState] = useState(false);
+  let [topicNumber,setTopicNumber] = useState(0);
+  let [inputValue,setInputValue] = useState("");
   //state
 
   //function
@@ -17,31 +18,33 @@ function App(){
     let newTopic = [...topic];    // deep copy   
     if(topic[0] === 'daily news 📺'){
       newTopic = ['미스터리한 개발자 ✨','Mr.Lee의 등장! ✨'] ;
-      topicChange(newTopic);
+      setTopic(newTopic);
     }
     else{
       newTopic = ['daily news 📺','Today issue 🤩'] ;
-      topicChange(newTopic);
+      setTopic(newTopic);
     }
   }
 
-  function listClick(i){
+  function listClick(arg){
     let newPageview = [...pageView]; // deep copy  
-    newPageview[i] = newPageview[i]+1 ;
-    pageViewChange(newPageview);
+    newPageview[arg] = newPageview[arg]+1 ;
+    setPageView(newPageview);
   
     if(modalState===false){
-      modalStateChange(!modalState);
-      topicNumberChange(i);
+      setModalState(!modalState);
+      setTopicNumber(arg);
     }
-    else if(topicNumber===i){
-      modalStateChange(!modalState);
+    else if(topicNumber===arg){
+      setModalState(!modalState);
     }
     else{
-      topicNumberChange(i);
+      setTopicNumber(arg);
     }
   }
   //function
+  
+    
   
   //html
   return (
@@ -51,13 +54,11 @@ function App(){
         <button onClick={ changeTopic } className="changeTheme">secret room</button>
       </div>    
       {
-        topic.map((a,i)=> {
-          return (    
-            <List topic={a} pageView={pageView[i]} listClick={ ()=>listClick(i) } />
-          )
+        topic.map((a,i)=>{
+          return <List key={i} topic={a} pageView={pageView[i]} onClick={() => listClick(i) } />
         })
       }
-    
+    <input type="text" onChange={ (e)=>{ setInputValue(e.target.value ) } }/>
 
       {
         modalState === true
