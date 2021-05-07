@@ -1,6 +1,6 @@
 function List(props){
     return (
-      <div className="list"  onClick={ props.onClick } >
+      <div className="list"  onClick={ props.onClick }>
         <div className="topicSide">
           <h3> { props.topic }
           </h3>

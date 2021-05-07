@@ -55,16 +55,18 @@ function App(){
       </div>    
       {
         topic.map((a,i)=>{
-          return <List key={i} topic={a} pageView={pageView[i]} onClick={() => listClick(i) } />
+          return <List key={i} topic={a} pageView={pageView[i]} onClick={() => listClick(i)} />
         })
       }
-    <input type="text" onChange={ (e)=>{ setInputValue(e.target.value ) } }/>
 
       {
         modalState === true
         ? <Modal topic={topic} topicNumber={topicNumber} date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
         : null
       }
+      <div className="searchBox">
+        <input className="getSearch"  type="text" onChange={ (e)=>{ setInputValue(e.target.value ) } }/>
+      </div>
     </div>
   );
   //html
