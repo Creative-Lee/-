@@ -8,10 +8,13 @@ function App(){
   //state 
   let [topic,setTopic] = useState(['daily news 📺','Today issue 🤩']);
   let [topic_,setTopic_] = useState(['미스터리한 개발자 ✨','Mr.Lee의 등장! ✨'])
+
   let [topicSelect,setTopicSelect] = useState(0);
   let [topicNumber,setTopicNumber] = useState(0);
+  let [modalSelect,setModalSelect] = useState(null);
+
   let [pageView,setPageView] = useState([0,0]);
-  let [modalSelect,setModalSelect] = useState(0);
+  
   let [inputValue,setInputValue] = useState("");
   //state
 
@@ -23,45 +26,37 @@ function App(){
     else{
       setTopicSelect(0);
     }
-    setModalSelect(0);
+    setModalSelect(null);
   }
 
   function listClick(arg){
-    let newPageview = [...pageView];  // deep copy  
-    if(modalSelect===0){
-      newPageview[arg] = newPageview[arg]+1 ;
-      setPageView(newPageview);
-  
-    }
-    else if(!(topicNumber===arg)){
-      newPageview[arg] = newPageview[arg]+1 ;
-      setPageView(newPageview);
-    }
+    let newPageView = [...pageView];  // deep copy  
 
-    if(modalSelect===0){  
-        if(topicSelect===0){
-          setModalSelect(1);
-        }
-        else{
-          setModalSelect(2);
-        }
-        setTopicNumber(arg);
-    }
-    else if(topicNumber===arg){
+    setTopicNumber(arg);    //토픽넘버는 0,1 따라감
+    if(topicSelect===0){
       setModalSelect(0);
     }
     else{
-      setTopicNumber(arg);
+      setModalSelect(1);
+    }
+
+    if(modalSelect === null || !(topicNumber === arg)){
+      newPageView[arg] = newPageView[arg] + 1 ;
+      setPageView(newPageView);
+    }
+    else{
+      setModalSelect(null);
     }
   }
   
+
   // function listClick(arg){
   //   let newPageview = [...pageView];  // deep copy  
 
   //   if(modalSelect===0){
   //     newPageview[arg] = newPageview[arg]+1 ;
   //     setPageView(newPageview);
-      
+
 
   //   }
   //   else if(!(topicNumber===arg)){
@@ -96,22 +91,24 @@ function App(){
     <div className="App">
       <div className="nav">
         <div>Mr.Lee Blog</div>
-        <button onClick={ themeChange } className="secretRoom">secret room</button>
+        <button onClick={ ()=> themeChange() } className="secretRoom">secret room</button>
       </div>    
       {
         topicSelect === 0
         ? topic.map((a,i)=>{
-          return <List key={i} topic={a} pageView={pageView[i]} onClick={() => listClick(i)} />
+          return <List key={i} topic={a} pageView={pageView[i]} onClick={ () => listClick(i)} /> 
+          }):       
+        topicSelect === 1  
+        ? topic_.map((a,i)=>{
+          return <List key={i} topic={a} pageView={pageView[i]} onClick={ () => listClick(i)} />
           })
-        : topic_.map((a,i)=>{
-          return <List key={i} topic={a} pageView={pageView[i]} onClick={() => listClick(i)} />
-          })
+        : null   //setTopicSelect(0)
       }
 
       {
-        modalSelect === 1
+        modalSelect === 0
         ? <Modal topic={topic} topicNumber={topicNumber} date="21.04.26" detail="미스터리가 개발자를 선택한 이유" /> :
-        modalSelect === 2
+        modalSelect === 1
         ? <Modal topic={topic_} topicNumber={topicNumber} date="21.04.26" detail="미스터리가 개발자를 선택한 이유" />
         : null
       }
