@@ -14,6 +14,8 @@ function App(){
   let [modalSelect,setModalSelect] = useState(null);
 
   let [pageView,setPageView] = useState([0,0]);
+  let [pageView_,setPageView_] = useState([0,0]);
+  let [pageViewSelect,setPageViewSelect] = useState(0);
   
   let [inputValue,setInputValue] = useState("");
   //state
@@ -21,18 +23,21 @@ function App(){
   //function
   function themeChange(){      
     if(topicSelect===0){
-      setTopicSelect(1);    
+      setTopicSelect(1);
+      setPageViewSelect(1);
     }
     else{
       setTopicSelect(0);
+      setPageViewSelect(0);    
     }
     setModalSelect(null);
   }
 
   function listClick(arg){
     let newPageView = [...pageView];  // deep copy  
-
+    let newPageView_ = [...pageView_]; // deep copy
     setTopicNumber(arg);    //토픽넘버는 0,1 따라감
+
     if(topicSelect===0){
       setModalSelect(0);
     }
@@ -40,52 +45,30 @@ function App(){
       setModalSelect(1);
     }
 
-    if(modalSelect === null || !(topicNumber === arg)){
-      newPageView[arg] = newPageView[arg] + 1 ;
-      setPageView(newPageView);
+    if( modalSelect === null || !( topicNumber === arg )){
+      if( pageViewSelect === 0 ){
+        newPageView[arg] = newPageView[arg] + 1 ;
+        setPageView(newPageView);
+      }
+      else{
+        newPageView_[arg] = newPageView_[arg] + 1 ;
+        setPageView_(newPageView_);
+      }
     }
     else{
       setModalSelect(null);
     }
   }
   
-
-  // function listClick(arg){
-  //   let newPageview = [...pageView];  // deep copy  
-
-  //   if(modalSelect===0){
-  //     newPageview[arg] = newPageview[arg]+1 ;
-  //     setPageView(newPageview);
-
-
-  //   }
-  //   else if(!(topicNumber===arg)){
-  //     newPageview[arg] = newPageview[arg]+1 ;
-  //     setPageView(newPageview);
-  //   }
-
-
-  //   if(modalSelect===0){  
-  //       if(topicSelect===0){
-  //         setModalSelect(1);
-  //       }
-  //       else{
-  //         setModalSelect(2);
-  //       }
-  //       setTopicNumber(arg);
-  //   }
-  //   else if(topicNumber===arg){
-  //     setModalSelect(0);
-  //   }
-  //   else{
-  //     setTopicNumber(arg);
-  //   }
-  // }
-
-  //function
+  function pushTopic(){
+    let newTopic = [...topic]
+    newTopic.push(inputValue);
+    setTopic(newTopic);
+  }
   
-    
-  
+
+
+
   //html
   return (
     <div className="App">
@@ -100,7 +83,7 @@ function App(){
           }):       
         topicSelect === 1  
         ? topic_.map((a,i)=>{
-          return <List key={i} topic={a} pageView={pageView[i]} onClick={ () => listClick(i)} />
+          return <List key={i} topic={a} pageView={pageView_[i]} onClick={ () => listClick(i)}/>
           })
         : null   //setTopicSelect(0)
       }
@@ -118,10 +101,11 @@ function App(){
         <input className="copySearch" type="text" defaultValue={inputValue}></input>
       </div>
       <div className="publish">
-        <input className="goButton" type="button" value="글 작성" ></input>
+        <input className="goButton" type="button" value="글 작성" onClick={ () => pushTopic() }></input>
       </div>
     </div>
   );
+  
   //html
 }
 
